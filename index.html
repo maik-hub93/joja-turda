@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>JOJA · Piese auto și schimb de ulei în Turda</title>
+<meta name="description" content="JOJA, magazin de piese auto și ulei pe Str. Ștefan cel Mare 9, Turda. Manopera la schimbul de ulei: 0 lei când cumperi uleiul și filtrul de la noi. Telefon 0741 289 083.">
+<meta name="theme-color" content="#131417">
+<meta property="og:title" content="JOJA · Piese auto și ulei, Turda">
+<meta property="og:description" content="Manopera la schimbul de ulei: 0 lei când cumperi uleiul și filtrul de la noi. Str. Ștefan cel Mare 9, Turda.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://joja-turda.vercel.app/img/hero.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23131417'/%3E%3Ccircle cx='16' cy='7' r='3.5' fill='none' stroke='%23F5B800' stroke-width='2'/%3E%3Crect x='14.5' y='10' width='3' height='18' rx='1.5' fill='%233A3E45'/%3E%3Crect x='14.5' y='18' width='3' height='10' rx='1.5' fill='%23F5B800'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+/* Layout: grafit de motor cu benzi gri de atelier; o jojă de ulei pe marginea paginii se umple de la MIN la MAX la scroll.
+   Un singur aspect, deliberat (fără comutare light/dark), deci toate culorile sunt setate explicit. */
+:root{
+  color-scheme: dark;
+  --graphite:#131417;
+  --graphite-2:#1B1D21;
+  --steel:#2A2D33;
+  --shop:#E8EAED;      /* gri atelier */
+  --paper:#F5F6F7;
+  --ink:#16171A;
+  --ink-soft:#555A62;
+  --on-dark:#EEF0F2;
+  --on-dark-soft:#A4A9B1;
+  --line-dark:rgba(238,240,242,.12);
+  --line-light:rgba(22,23,26,.13);
+  --red:#C8102E;       /* roșu semnal: doar acțiuni */
+  --red-deep:#8E0B21;
+  --oil:#F5B800;       /* galben ulei: doar accente */
+  --display:"Saira Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --gutter:clamp(16px,4vw,48px);
+  --maxw:1200px;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--graphite);color:var(--on-dark);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);line-height:1;margin:0;text-wrap:balance;letter-spacing:-.005em}
+h2{font-size:clamp(36px,5.4vw,60px);font-weight:700;text-transform:uppercase}
+h3{font-size:24px;font-weight:700;text-transform:uppercase;letter-spacing:.01em}
+p{margin:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
+.eyebrow{font:600 12.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--oil)}
+.light .eyebrow{color:var(--red)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--oil);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font:700 16px var(--body);text-decoration:none;padding:15px 22px;border-radius:3px;border:0;cursor:pointer;transition:transform .2s ease,background-color .2s ease,border-color .2s ease}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:#DD1435;transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(238,240,242,.32);color:var(--on-dark)}
+.btn-ghost:hover{border-color:var(--oil);transform:translateY(-2px)}
+.light .btn-ghost{border-color:var(--line-light);color:var(--ink)}
+.light .btn-ghost:hover{border-color:var(--ink)}
+
+/* demo ribbon */
+.ribbon{background:var(--oil);color:var(--ink);font:500 13px/1.4 var(--body);display:flex;gap:12px;align-items:center;justify-content:center;padding:8px var(--gutter);text-align:center}
+.ribbon b{font-weight:700}
+.ribbon button{background:transparent;border:1px solid rgba(22,23,26,.4);border-radius:3px;font:600 12px var(--body);padding:4px 9px;cursor:pointer;color:var(--ink);flex:none}
+
+/* top bar + header */
+.topbar{background:#0D0E10;font:500 13px var(--mono);color:var(--on-dark-soft);border-bottom:1px solid var(--line-dark)}
+.topbar .wrap{display:flex;gap:18px;align-items:center;justify-content:space-between;min-height:38px;flex-wrap:wrap}
+.status{display:inline-flex;align-items:center;gap:9px;color:var(--on-dark)}
+.status i{width:8px;height:8px;border-radius:50%;background:#7A7F87;flex:none}
+.status.open i{background:#3DD07B;box-shadow:0 0 0 0 rgba(61,208,123,.55);animation:pulse 2.4s ease-out infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,208,123,.55)}70%{box-shadow:0 0 0 8px rgba(61,208,123,0)}100%{box-shadow:0 0 0 0 rgba(61,208,123,0)}}
+.topbar .addr{display:none}
+@media (min-width:760px){.topbar .addr{display:inline}}
+@media (max-width:520px){.topbar .tphone{display:none}}
+header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(19,20,23,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line-dark)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:68px}
+.logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo svg{width:22px;height:40px}
+.logo b{font:800 30px/1 var(--display);letter-spacing:.06em}
+.logo small{display:block;font:500 10.5px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-soft);margin-top:2px}
+nav.main{display:none;gap:26px}
+nav.main a{text-decoration:none;font:600 15px var(--body);color:var(--on-dark-soft);transition:color .2s}
+nav.main a:hover{color:var(--on-dark)}
+header .btn{padding:11px 16px;font-size:15px}
+@media (min-width:980px){nav.main{display:flex}}
+@media (max-width:520px){header .btn .lbl{display:none}header .btn{padding:11px 13px}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line-dark)}
+.hero .wrap>div{min-width:0}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(48px,8vw,96px) clamp(40px,6vw,72px)}
+.hero h1{font-size:clamp(48px,7.6vw,96px);font-weight:800;text-transform:uppercase;line-height:.92;margin-top:18px}
+.hero h1 em{font-style:normal;color:var(--oil);display:block}
+.hero .lead{margin-top:24px;font-size:clamp(17px,1.6vw,19.5px);color:var(--on-dark-soft);max-width:46ch}
+.hero .lead b{color:var(--on-dark);font-weight:600}
+.hero .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.hero .fine{margin-top:14px;font-size:14px;color:var(--on-dark-soft)}
+.hero .fine a{color:var(--on-dark)}
+.hero-photo{position:relative;aspect-ratio:4/5;max-height:620px;width:100%;border-radius:3px;overflow:hidden;background:linear-gradient(160deg,#2A2D33,#16171A)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.85) contrast(1.05)}
+.hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(19,20,23,0) 55%,rgba(19,20,23,.85))}
+.price-tag{position:absolute;left:18px;bottom:18px;z-index:2;background:var(--graphite);border:1px solid var(--line-dark);border-left:4px solid var(--oil);padding:14px 18px;border-radius:3px}
+.price-tag .k{font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--on-dark-soft)}
+.price-tag .v{font:800 46px/1 var(--display);color:var(--oil);margin-top:4px}
+.price-tag .v small{font-size:22px;margin-left:4px}
+.facts{border-top:1px solid var(--line-dark)}
+.facts .wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.facts .wrap>div{padding:18px 0;font-size:14.5px;color:var(--on-dark-soft);border-right:1px solid var(--line-dark);padding-right:18px}
+.facts .wrap>div+div{padding-left:18px}
+.facts .wrap>div:last-child{border-right:0}
+.facts b{display:block;font:700 19px var(--display);text-transform:uppercase;letter-spacing:.02em;color:var(--on-dark)}
+@media (max-width:860px){.price-tag{left:auto;right:12px;bottom:12px;padding:10px 14px}.price-tag .v{font-size:34px}.hero-photo img{object-position:28% 45%!important}.hero .wrap{grid-template-columns:1fr}.hero-photo{aspect-ratio:16/11}.facts .wrap{grid-template-columns:1fr}.facts .wrap>div{border-right:0;border-bottom:1px solid var(--line-dark);padding:14px 0!important}.facts .wrap>div:last-child{border-bottom:0}}
+
+/* sections */
+section{padding-block:clamp(72px,10vw,120px)}
+.light{background:var(--shop);color:var(--ink)}
+.paper{background:var(--paper);color:var(--ink)}
+.sec-head{display:grid;gap:18px;max-width:760px}
+.sec-head p{font-size:18px;color:var(--on-dark-soft);max-width:56ch}
+.light .sec-head p,.paper .sec-head p{color:var(--ink-soft)}
+.sec-head p.eyebrow{font-size:12.5px;color:var(--oil)}
+.light .sec-head p.eyebrow,.paper .eyebrow,.light .eyebrow{color:var(--red)}
+.offer .sec-head p.eyebrow{color:var(--oil)}
+
+/* offer */
+.offer{background:var(--red-deep);background:linear-gradient(180deg,#8E0B21,#7A0A1C);color:#fff}
+.offer .eyebrow{color:var(--oil)}
+.offer .sec-head p{color:rgba(255,255,255,.78)}
+.steps{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-top:1px solid rgba(255,255,255,.22)}
+.steps li{padding:26px 24px 8px 0;position:relative}
+.steps li+li{padding-left:24px;border-left:1px solid rgba(255,255,255,.22)}
+.steps .n{font:600 13px var(--mono);color:var(--oil);letter-spacing:.1em}
+.steps h3{margin-top:12px;font-size:25px}
+.steps p{margin-top:10px;color:rgba(255,255,255,.8);font-size:15.5px}
+@media (max-width:900px){.steps{grid-template-columns:1fr 1fr}.steps li:nth-child(3){padding-left:0;border-left:0}.steps li:nth-child(n+3){border-top:1px solid rgba(255,255,255,.22)}}
+@media (max-width:560px){.steps{grid-template-columns:1fr}.steps li,.steps li+li{padding-left:0;border-left:0}.steps li+li{border-top:1px solid rgba(255,255,255,.22)}}
+.terms{margin-top:48px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:rgba(0,0,0,.18);border-radius:3px;overflow:hidden}
+.terms > div{background:rgba(0,0,0,.22);padding:26px}
+.terms h3{font-size:19px;display:flex;align-items:center;gap:10px}
+.terms h3 i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--body);font-style:normal;flex:none}
+.terms .yes h3 i{background:var(--oil);color:var(--ink)}
+.terms .no h3 i{border:1.5px solid rgba(255,255,255,.6);color:#fff}
+.terms ul{margin:14px 0 0;padding-left:20px;color:rgba(255,255,255,.85);font-size:15.5px}
+.terms li{margin-top:6px}
+@media (max-width:760px){.terms{grid-template-columns:1fr}}
+
+/* price request form */
+.quote .wrap{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,6vw,80px);align-items:start}
+.talon{margin-top:30px;background:var(--paper);border:1px solid var(--line-light);border-radius:3px;padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
+.talon svg{width:54px;height:40px}
+.talon b{display:block;font:700 17px var(--display);text-transform:uppercase;letter-spacing:.02em}
+.talon p{font-size:15px;color:var(--ink-soft);margin-top:4px}
+.direct{margin-top:24px;display:grid;gap:4px;font-size:15px;color:var(--ink-soft)}
+.direct .big{font:600 26px var(--mono);color:var(--ink)}
+.direct a{text-decoration:none}
+.form{background:#fff;border:1px solid var(--line-light);border-radius:3px;padding:clamp(20px,3vw,32px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 18px}
+.form label,.form legend{font:600 13px var(--body);color:var(--ink-soft);display:grid;gap:7px}
+.form .full{grid-column:1/-1}
+.form input,.form textarea{font:500 16px var(--body);color:var(--ink);background:var(--paper);border:1px solid var(--line-light);border-radius:3px;padding:12px 13px;width:100%}
+.form input:focus,.form textarea:focus{outline:2px solid var(--ink);outline-offset:0;border-color:var(--ink)}
+.form textarea{min-height:84px;resize:vertical}
+.chips{border:0;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:8px}
+.chips legend{margin-bottom:9px;width:100%}
+.chips label{display:block;cursor:pointer}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips span{display:inline-block;font:600 14px var(--body);color:var(--ink);padding:9px 13px;border:1px solid var(--line-light);border-radius:999px;background:var(--paper);transition:background-color .15s,border-color .15s}
+.chips input:checked + span{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chips input:focus-visible + span{outline:3px solid var(--oil);outline-offset:2px}
+.btn-wa{background:#1E9E55;color:#fff;justify-content:center}
+.btn-wa:hover{background:#1A8B4B;transform:translateY(-2px)}
+.form .note{font-size:13px;color:var(--ink-soft)}
+@media (max-width:900px){.quote .wrap{grid-template-columns:1fr}}
+@media (max-width:520px){.form{grid-template-columns:1fr}}
+
+/* parts */
+.parts-grid{margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line-dark);border-left:1px solid var(--line-dark)}
+.part{padding:26px 22px 28px;border-right:1px solid var(--line-dark);border-bottom:1px solid var(--line-dark);transition:background-color .25s}
+.part:hover{background:var(--graphite-2)}
+.part svg{width:34px;height:34px;color:var(--oil)}
+.part h3{margin-top:18px;font-size:21px}
+.part p{margin-top:8px;font-size:14.5px;color:var(--on-dark-soft)}
+@media (max-width:980px){.parts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:340px){.parts-grid{grid-template-columns:1fr}}
+@media (max-width:460px){.part{padding:20px 14px 22px}.part h3{font-size:18px}}
+.specs{margin-top:40px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;font-size:14.5px;color:var(--on-dark-soft)}
+.specs span.s{font:500 13px var(--mono);color:var(--on-dark);border:1px solid var(--line-dark);padding:6px 10px;border-radius:3px}
+.strip{margin-top:48px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px}
+.ph{position:relative;overflow:hidden;border-radius:3px;background:linear-gradient(160deg,#2A2D33,#16171A);aspect-ratio:4/3}
+.ph img{width:100%;height:100%;object-fit:cover;filter:saturate(.85);transition:transform .8s ease}
+.ph:hover img{transform:scale(1.04)}
+.ph figcaption{position:absolute;left:12px;bottom:10px;font:500 12px var(--mono);color:#fff;background:rgba(19,20,23,.7);padding:4px 8px;border-radius:2px}
+.strip .ph{aspect-ratio:auto;height:clamp(200px,24vw,320px)}
+@media (max-width:760px){.strip{grid-template-columns:1fr 1fr}.strip .ph:first-child{grid-column:1/-1}}
+
+/* service */
+.service .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,80px);align-items:center}
+.service .ph{aspect-ratio:5/4}
+.svc{list-style:none;padding:0;margin:32px 0 0;border-top:1px solid var(--line-light)}
+.svc li{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line-light);font-weight:600}
+.svc li span{font:500 13px var(--mono);color:var(--ink-soft);text-align:right}
+.svc li span.free{color:var(--red);font-weight:600}
+.service .after{margin-top:20px;font-size:15px;color:var(--ink-soft)}
+@media (max-width:900px){.service .wrap{grid-template-columns:1fr}}
+
+/* reasons */
+.reasons{margin-top:48px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,3vw,40px)}
+.reasons div{border-top:3px solid var(--oil);padding-top:20px}
+.reasons .big{font:800 56px/1 var(--display);color:var(--on-dark)}
+.reasons h3{margin-top:10px;font-size:22px}
+.reasons p{margin-top:10px;color:var(--on-dark-soft);font-size:15.5px}
+@media (max-width:820px){.reasons{grid-template-columns:1fr}}
+
+/* reviews */
+.revs{margin-top:44px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.rev{margin:0;background:#fff;border:1px solid var(--line-light);border-radius:3px;padding:24px;display:grid;align-content:start;gap:14px}
+.rev .stars{color:var(--oil);letter-spacing:3px;font-size:17px}
+.rev blockquote{margin:0;font-size:16px;line-height:1.55;color:var(--ink)}
+.rev figcaption{font-size:14px;color:var(--ink-soft);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.rev figcaption b{color:var(--ink);font-weight:600}
+.rev .ex{margin-left:auto;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line-light);border-radius:2px;padding:2px 6px}
+.rev-cta{margin-top:28px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:15px;color:var(--ink-soft)}
+@media (max-width:820px){.revs{grid-template-columns:1fr}}
+
+/* contact */
+.contact .wrap{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,6vw,72px);align-items:start}
+.hours{margin-top:28px;width:100%;border-collapse:collapse;font-size:15.5px}
+.hours td{padding:11px 0;border-bottom:1px solid var(--line-dark)}
+.hours td:last-child{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.hours tr.today td{color:var(--oil);font-weight:600}
+.addr-big{margin-top:24px;font:700 28px/1.1 var(--display);text-transform:uppercase}
+.contact .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.map{position:relative;border-radius:3px;overflow:hidden;border:1px solid var(--line-dark);aspect-ratio:4/3;background:var(--graphite-2)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;filter:grayscale(.6) contrast(1.05)}
+@media (max-width:900px){.contact .wrap{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--line-dark);padding-block:28px 110px;font-size:14px;color:var(--on-dark-soft)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer a{color:var(--on-dark-soft)}
+@media (min-width:900px){footer{padding-bottom:28px}}
+
+/* dipstick: page-level scroll gauge (desktop) */
+.dip{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:30;display:none;align-items:center;gap:8px;pointer-events:none}
+.dip .rod{position:relative;width:6px;height:42vh;max-height:380px;background:#2E3137;border-radius:3px;overflow:hidden}
+.dip .lvl{position:absolute;left:0;right:0;bottom:0;height:0;background:var(--oil);border-radius:3px;transition:height .15s linear}
+.dip .ring{position:absolute;top:-22px;left:50%;transform:translateX(-50%);width:16px;height:16px;border:2px solid #4A4E56;border-radius:50%}
+.dip .scale{position:relative;height:42vh;max-height:380px;font:600 10px var(--mono);letter-spacing:.08em;color:#8D929A;width:30px}
+.dip .scale span{position:absolute;left:0}
+.dip .scale .mx{top:14%}.dip .scale .mn{bottom:6%}
+.dip .wrapr{position:relative}
+@media (min-width:1280px){.dip{display:flex}}
+
+/* mobile action bar */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:grid;grid-template-columns:repeat(3,1fr);background:var(--graphite);border-top:1px solid var(--line-dark);padding-bottom:env(safe-area-inset-bottom,0px)}
+.mbar a{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px 11px;text-decoration:none;font:600 12.5px var(--body);color:var(--on-dark)}
+.mbar a svg{width:21px;height:21px}
+.mbar .call{background:var(--red);color:#fff}
+.mbar .wa svg{color:#3DD07B}
+.mbar .go svg{color:var(--oil)}
+.mbar .prog{position:absolute;top:-2px;left:0;height:2px;background:var(--oil);width:0}
+@media (min-width:900px){.mbar{display:none}}
+
+/* reveal: visible at rest, gentle lift when JS + motion allowed */
+.js .rv{transition:opacity .7s ease,transform .7s ease}
+.js .rv.pre{opacity:.001;transform:translateY(18px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.js .rv,.js .rv.pre{opacity:1;transform:none;transition:none}.status.open i{animation:none}.btn,.ph img{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"AutoPartsStore","name":"JOJA Piese Auto & Ulei","telephone":"+40741289083","url":"https://joja-turda.vercel.app","image":"https://joja-turda.vercel.app/img/hero.jpg","description":"Magazin de piese auto și ulei în Turda. Manopera la schimbul de ulei este gratuită când uleiul și filtrul de ulei sunt cumpărate din magazin.","address":{"@type":"PostalAddress","streetAddress":"Str. Ștefan cel Mare nr. 9","addressLocality":"Turda","addressRegion":"Cluj","addressCountry":"RO"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday"],"opens":"08:00","closes":"18:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"08:00","closes":"14:00"}]}
+</script>
+</head>
+<body>
+
+<div class="ribbon" id="ribbon"><span><b>Versiune demo.</b> Numele, programul și fotografiile sunt orientative și se înlocuiesc cu cele reale.</span><button type="button" id="ribbon-x">Ascunde</button></div>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="status" id="status"><i></i><span id="status-txt">Program: L–V 08–18 · S 08–14</span></span>
+    <span class="addr">Str. Ștefan cel Mare nr. 9, Turda</span>
+    <a class="tphone" href="tel:+40741289083" style="text-decoration:none;color:var(--on-dark)">0741 289 083</a>
+  </div>
+</div>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="JOJA, piese auto și ulei, început de pagină">
+      <svg viewBox="0 0 22 40" aria-hidden="true"><circle cx="11" cy="7" r="5" fill="none" stroke="#F5B800" stroke-width="2.4"/><rect x="9" y="12" width="4" height="27" rx="2" fill="#3A3E45"/><rect x="9" y="25" width="4" height="14" rx="2" fill="#F5B800"/></svg>
+      <span><b>JOJA</b><small>Piese auto &amp; ulei</small></span>
+    </a>
+    <nav class="main" aria-label="Navigare principală">
+      <a href="#oferta">Oferta la ulei</a>
+      <a href="#pret">Cere preț</a>
+      <a href="#piese">Piese</a>
+      <a href="#service">Service</a>
+      <a href="#contact">Program și adresă</a>
+    </nav>
+    <a class="btn btn-red" href="tel:+40741289083"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="lbl">0741 289 083</span></a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero" style="padding:0">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Piese auto · Ulei · Turda</p>
+      <h1>Schimbul de ulei îl facem noi. <em>Manopera: 0 lei.</em></h1>
+      <p class="lead">Cumperi <b>uleiul și filtrul de ulei</b> de la noi, de pe Ștefan cel Mare 9, și ți le schimbăm pe loc. Nu plătești manopera. Uleiul vechi rămâne la noi.</p>
+      <div class="cta">
+        <a class="btn btn-red" href="#pret"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.1 1.2Z"/></svg>Află prețul pe WhatsApp</a>
+        <a class="btn btn-ghost" href="tel:+40741289083"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Sună: 0741 289 083</a>
+      </div>
+      <p class="fine">Condițiile ofertei sunt scrise mai jos, pe înțeles. <a href="#oferta">Vezi ce intră</a></p>
+    </div>
+    <figure class="hero-photo" style="margin:0">
+      <img src="img/dipstick.jpg" width="870" height="580" style="object-position:42% 50%" alt="Mecanic care verifică nivelul uleiului cu joja" fetchpriority="high" onerror="this.remove()">
+      <div class="price-tag"><div class="k">Manoperă schimb ulei</div><div class="v num">0<small>lei</small></div></div>
+    </figure>
+  </div>
+  <div class="facts">
+    <div class="wrap">
+      <div><b>Manoperă 0 lei</b>la schimbul de ulei, cu uleiul și filtrul luate de la noi</div>
+      <div><b>Piesa potrivită din prima</b>verificăm după talon sau seria de șasiu</div>
+      <div><b>Ștefan cel Mare 9</b>în Turda, cu program afișat mai jos</div>
+    </div>
+  </div>
+</section>
+
+<section class="offer" id="oferta">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Oferta la ulei</p>
+      <h2>Cum funcționează. Fără capcane.</h2>
+      <p>Uleiul și filtrul le plătești la prețul de raft. Manopera nu o plătești. Atât.</p>
+    </div>
+    <ol class="steps">
+      <li class="rv"><span class="n">01</span><h3>Ne trimiți talonul</h3><p>O poză pe WhatsApp sau ne spui marca, modelul și motorizarea.</p></li>
+      <li class="rv"><span class="n">02</span><h3>Primești prețul</h3><p>Îți spunem ce ulei cere motorul tău și cât costă uleiul și filtrul.</p></li>
+      <li class="rv"><span class="n">03</span><h3>Vii la magazin</h3><p>Pe Ștefan cel Mare 9, în programul afișat. Sună înainte, ca să nu aștepți.</p></li>
+      <li class="rv"><span class="n">04</span><h3>Schimbăm pe loc</h3><p>Golim uleiul vechi, montăm filtrul nou, punem uleiul nou. Manopera: 0 lei.</p></li>
+    </ol>
+    <div class="terms rv">
+      <div class="yes">
+        <h3><i>✓</i>Ce intră gratuit</h3>
+        <ul>
+          <li>Manopera pentru schimbul uleiului de motor</li>
+          <li>Manopera pentru înlocuirea filtrului de ulei</li>
+          <li>Preluarea uleiului uzat, predat la reciclare autorizată</li>
+        </ul>
+      </div>
+      <div class="no">
+        <h3><i>!</i>Condiția</h3>
+        <ul>
+          <li>Uleiul și filtrul de ulei sunt cumpărate de la noi</li>
+          <li>Alte lucrări (filtre de aer, polen, combustibil) se discută separat, cu prețul spus înainte</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="light quote" id="pret">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Cere preț</p>
+      <h2 style="margin-top:18px">Află prețul unei piese în câteva minute.</h2>
+      <p style="margin-top:18px;font-size:18px;color:var(--ink-soft);max-width:44ch">Completezi ce știi despre mașină și mesajul se deschide gata scris pe WhatsApp.</p>
+      <div class="talon">
+        <svg viewBox="0 0 54 40" aria-hidden="true"><rect x="1" y="1" width="52" height="38" rx="3" fill="none" stroke="#16171A" stroke-width="2"/><rect x="7" y="8" width="16" height="3" fill="#C8102E"/><rect x="7" y="15" width="40" height="2" fill="#16171A" opacity=".5"/><rect x="7" y="21" width="34" height="2" fill="#16171A" opacity=".5"/><rect x="7" y="27" width="38" height="2" fill="#16171A" opacity=".5"/><rect x="7" y="33" width="22" height="2" fill="#16171A" opacity=".5"/></svg>
+        <div><b>Cel mai sigur: poza talonului</b><p>Din certificatul de înmatriculare vedem exact motorizarea și seria de șasiu. Așa primești piesa potrivită din prima.</p></div>
+      </div>
+      <div class="direct">
+        <span>Sau sună direct</span>
+        <a class="big" href="tel:+40741289083">0741 289 083</a>
+      </div>
+    </div>
+    <form class="form rv" id="qform" novalidate>
+      <label>Marca<input id="f-make" autocomplete="off" placeholder="ex. Volkswagen"></label>
+      <label>Modelul<input id="f-model" autocomplete="off" placeholder="ex. Golf 6"></label>
+      <label>Anul<input id="f-year" inputmode="numeric" autocomplete="off" placeholder="ex. 2011"></label>
+      <label>Motorizarea<input id="f-engine" autocomplete="off" placeholder="ex. 1.6 TDI, 105 CP"></label>
+      <fieldset class="full chips">
+        <legend>Ce piesă cauți</legend>
+        <label><input type="radio" name="piesa" id="p1" value="Kit schimb ulei (ulei + filtru)" checked><span>Ulei + filtru</span></label>
+        <label><input type="radio" name="piesa" id="p2" value="Plăcuțe / discuri de frână"><span>Frâne</span></label>
+        <label><input type="radio" name="piesa" id="p3" value="Kit distribuție"><span>Distribuție</span></label>
+        <label><input type="radio" name="piesa" id="p4" value="Filtre (aer, polen, combustibil)"><span>Filtre</span></label>
+        <label><input type="radio" name="piesa" id="p5" value="Baterie"><span>Baterie</span></label>
+        <label><input type="radio" name="piesa" id="p6" value="Altă piesă"><span>Altceva</span></label>
+      </fieldset>
+      <label class="full">Detalii (opțional)<textarea id="f-det" placeholder="ex. Și plăcuțele de pe față, dacă le aveți pe stoc."></textarea></label>
+      <button class="btn btn-wa full" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.1 1.2Z"/></svg>Trimite pe WhatsApp</button>
+      <p class="note full">După ce se deschide WhatsApp, atașează și poza talonului.</p>
+    </form>
+  </div>
+</section>
+
+<section id="piese">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Ce găsești la noi</p>
+      <h2>Piesele pe care le schimbi cel mai des.</h2>
+      <p>Ce nu avem pe raft aducem la comandă. Întreabă înainte să cauți în altă parte.</p>
+    </div>
+    <div class="parts-grid">
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11Z"/><path d="M9.5 15a2.5 2.5 0 0 0 2.5 2.5"/></svg><h3>Ulei de motor</h3><p>În specificația cerută de producătorul mașinii.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="2"/><path d="M6 8h12M6 16h12M9 8v8M12 8v8M15 8v8"/></svg><h3>Filtre</h3><p>Ulei, aer, polen, combustibil.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3"/></svg><h3>Frânare</h3><p>Plăcuțe, discuri, saboți, lichid de frână.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="7" cy="12" r="3.5"/><circle cx="17" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/><path d="M8.5 8.8 15 5.3M8.5 15.2 15 18.7M19.4 7.6v8.8"/></svg><h3>Distribuție</h3><p>Kituri complete, pompe de apă, curele.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v4M12 17v4"/><path d="M8 7h8l-1 10H9z"/><path d="M6 10l-2 1M18 10l2 1"/></svg><h3>Suspensie</h3><p>Amortizoare, bielete, pivoți, bucșe.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M7 7V5h3v2M14 7V5h3v2M7 13h3M15.5 11.5v3M14 13h3"/></svg><h3>Baterii</h3><p>Pentru autoturisme și utilitare ușoare.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M9 9h4a5 5 0 0 1 0 10H9z"/><path d="M5 11h4M5 14h4M5 17h4"/></svg><h3>Iluminare</h3><p>Becuri, faruri, stopuri.</p></div>
+      <div class="part rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 3h8l1 4H7z"/><path d="M7 7v13h10V7"/><path d="M10 11h4M10 14h4"/></svg><h3>Lichide</h3><p>Antigel, lichid de parbriz, AdBlue.</p></div>
+    </div>
+    <div class="specs rv">
+      <span>Întrebăm după norma producătorului, nu doar după vâscozitate:</span>
+      <span class="s">VW 504.00 / 507.00</span><span class="s">MB 229.51</span><span class="s">BMW LL-04</span><span class="s">GM dexos2</span><span class="s">Renault RN0720</span>
+    </div>
+    <div class="strip">
+      <figure class="ph rv" style="margin:0"><img loading="lazy" src="img/hero.jpg" width="1280" height="853" alt="Bidon de ulei, filtru nou și chei pe bancul de lucru" onerror="this.remove()"></figure>
+      <figure class="ph rv" style="margin:0"><img loading="lazy" src="img/filtre.jpg" width="600" height="600" alt="Filtru de ulei nou lângă cel vechi" onerror="this.remove()"></figure>
+      <figure class="ph rv" style="margin:0"><img loading="lazy" src="img/ulei.jpg" width="642" height="422" alt="Ulei nou turnat în motor" onerror="this.remove()"></figure>
+    </div>
+  </div>
+</section>
+
+<section class="paper service" id="service">
+  <div class="wrap">
+    <figure class="ph rv" style="margin:0"><img loading="lazy" src="img/service.jpg" width="1600" height="1068" alt="Mecanic care verifică partea de jos a unei mașini ridicate" onerror="this.remove()"></figure>
+    <div class="rv">
+      <p class="eyebrow">Service</p>
+      <h2 style="margin-top:18px">Piesa de la noi, montajul tot la noi.</h2>
+      <p style="margin-top:18px;font-size:18px;color:var(--ink-soft);max-width:48ch">Nu mai cauți separat magazin și mecanic. Prețul manoperei îl afli înainte să începem.</p>
+      <ul class="svc">
+        <li>Schimb ulei și filtru de ulei<span class="free">0 lei manoperă*</span></li>
+        <li>Filtre de aer, polen și combustibil<span>preț spus înainte</span></li>
+        <li>Plăcuțe și discuri de frână<span>preț spus înainte</span></li>
+        <li>Suspensie și direcție<span>preț spus înainte</span></li>
+        <li>Montaj baterie<span>preț spus înainte</span></li>
+      </ul>
+      <p class="after">* cu uleiul și filtrul cumpărate de la noi. <a href="#oferta" style="color:var(--ink)">Vezi condițiile</a></p>
+    </div>
+  </div>
+</section>
+
+<section id="de-ce">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">De ce JOJA</p>
+      <h2>Trei motive să treci pe la noi.</h2>
+    </div>
+    <div class="reasons">
+      <div class="rv"><span class="big num">0 lei</span><h3>Manopera la ulei</h3><p>Uleiul se schimbă o dată pe an sau la 10–15 mii de km. De fiecare dată economisești manopera.</p></div>
+      <div class="rv"><span class="big">1×</span><h3>Piesa bună din prima</h3><p>Verificăm după talon sau seria de șasiu. Nu pleci acasă cu o piesă care nu se potrivește.</p></div>
+      <div class="rv"><span class="big">1 loc</span><h3>Magazin și atelier</h3><p>Cumperi piesa și o montezi în aceeași vizită, pe Ștefan cel Mare 9.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="light" id="recenzii">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="eyebrow">Recenzii</p>
+      <h2>Ce spun clienții noștri.</h2>
+      <p>Recenziile de pe Google ale clienților noștri.</p>
+    </div>
+    <div class="revs">
+      <figure class="rev rv"><span class="stars" aria-label="5 stele">★★★★★</span><blockquote>„Am trimis poza cu talonul seara și dimineața aveau uleiul și filtrul pregătite. Mi l-au schimbat cât am băut o cafea, fără să plătesc manopera.”</blockquote><figcaption><b>Andrei M.</b> · Turda <span class="ex">exemplu</span></figcaption></figure>
+      <figure class="rev rv"><span class="stars" aria-label="5 stele">★★★★★</span><blockquote>„Căutam plăcuțe pentru un Logan și peste tot îmi dădeau altele. Aici au verificat după seria de șasiu și s-au potrivit din prima.”</blockquote><figcaption><b>Ioana P.</b> · Câmpia Turzii <span class="ex">exemplu</span></figcaption></figure>
+      <figure class="rev rv"><span class="stars" aria-label="5 stele">★★★★★</span><blockquote>„Oameni serioși, îți spun prețul înainte și nu încearcă să-ți vândă ce nu-ți trebuie. Merg la ei de doi ani pentru revizii.”</blockquote><figcaption><b>Sorin T.</b> · Turda <span class="ex">exemplu</span></figcaption></figure>
+    </div>
+    <div class="rev-cta rv"><a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&amp;query=Str.+%C8%98tefan+cel+Mare+9%2C+Turda" target="_blank" rel="noopener">Vezi-ne pe Google</a><span>Ai cumpărat de la noi? O recenzie ne ajută mult.</span></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="rv">
+      <p class="eyebrow">Program și adresă</p>
+      <h2 style="margin-top:18px">Te așteptăm la magazin.</h2>
+      <p class="addr-big">Str. Ștefan cel Mare nr. 9<br>Turda, jud. Cluj</p>
+      <table class="hours" aria-label="Program de lucru">
+        <tbody>
+          <tr data-days="1,2,3,4,5"><td>Luni – Vineri</td><td>08:00 – 18:00</td></tr>
+          <tr data-days="6"><td>Sâmbătă</td><td>08:00 – 14:00</td></tr>
+          <tr data-days="0"><td>Duminică</td><td>Închis</td></tr>
+        </tbody>
+      </table>
+      <div class="cta">
+        <a class="btn btn-red" href="https://www.google.com/maps/dir/?api=1&amp;destination=Str.+%C8%98tefan+cel+Mare+9%2C+Turda" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Traseu până la noi</a>
+        <a class="btn btn-ghost" href="tel:+40741289083">Sună: 0741 289 083</a>
+      </div>
+    </div>
+    <div class="map rv">
+      <iframe title="Hartă: Str. Ștefan cel Mare 9, Turda" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Strada+%C8%98tefan+cel+Mare+9,+Turda,+Romania&amp;z=16&amp;output=embed"></iframe>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b style="color:var(--on-dark);font-weight:600">JOJA · Piese auto &amp; ulei</b> · Str. Ștefan cel Mare 9, Turda · <span>[denumire juridică · CUI]</span></span>
+    <span><a href="https://anpc.ro" target="_blank" rel="noopener">ANPC</a> · © <span id="yr">2026</span> · Site realizat de Aeria Digital</span>
+  </div>
+</footer>
+
+<div class="dip" aria-hidden="true">
+  <div class="wrapr"><span class="ring"></span><div class="rod"><div class="lvl" id="lvl"></div></div></div>
+  <div class="scale"><span class="mx">MAX</span><span class="mn">MIN</span></div>
+</div>
+
+<nav class="mbar" aria-label="Contact rapid">
+  <span class="prog" id="prog"></span>
+  <a class="call" href="tel:+40741289083"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Sună</a>
+  <a class="wa" href="#pret"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Z"/></svg>WhatsApp</a>
+  <a class="go" href="https://www.google.com/maps/dir/?api=1&amp;destination=Str.+%C8%98tefan+cel+Mare+9%2C+Turda" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Traseu</a>
+</nav>
+
+<script>
+(function(){
+  var WA_NUMBER='40741289083';
+  var HOURS={0:null,1:[8,18],2:[8,18],3:[8,18],4:[8,18],5:[8,18],6:[8,14]};
+  var DAYS=['duminică','luni','marți','miercuri','joi','vineri','sâmbătă'];
+
+  // time in Turda (Europe/Bucharest), whatever the visitor's timezone
+  function nowRO(){
+    try{
+      var p=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Bucharest',weekday:'short',hour:'numeric',minute:'numeric',hour12:false}).formatToParts(new Date()), o={};
+      p.forEach(function(x){o[x.type]=x.value;});
+      return {d:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(o.weekday),h:(+o.hour%24)+(+o.minute)/60};
+    }catch(e){var n=new Date();return {d:n.getDay(),h:n.getHours()+n.getMinutes()/60};}
+  }
+  function pad(h){return (h<10?'0':'')+h+':00';}
+  var t=nowRO(), st=document.getElementById('status'), tx=document.getElementById('status-txt'), today=HOURS[t.d];
+  if(today && t.h>=today[0] && t.h<today[1]){st.classList.add('open');tx.textContent='Deschis acum · până la '+pad(today[1]);}
+  else{
+    var i=0,d=t.d,h;
+    if(today && t.h<today[0]){h=today;}
+    else{do{i++;d=(t.d+i)%7;h=HOURS[d];}while(!h && i<7);}
+    tx.textContent='Închis acum · deschidem '+(i===0?'azi':(i===1?'mâine':DAYS[d]))+' la '+pad(h[0]);
+  }
+  [].forEach.call(document.querySelectorAll('.hours tr'),function(r){if(r.dataset.days.split(',').indexOf(String(t.d))>-1)r.classList.add('today');});
+
+  // dipstick + mobile progress
+  var lvl=document.getElementById('lvl'), prog=document.getElementById('prog');
+  function onScroll(){
+    var max=document.documentElement.scrollHeight-window.innerHeight, p=max>0?Math.min(1,window.scrollY/max):0;
+    lvl.style.height=(p*100)+'%'; prog.style.width=(p*100)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); window.addEventListener('resize',onScroll); onScroll();
+
+  // gentle reveal; content stays visible without JS or with reduced motion
+  if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
+    document.documentElement.classList.add('js');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.remove('pre');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
+    [].forEach.call(document.querySelectorAll('.rv'),function(el){
+      if(el.getBoundingClientRect().top>window.innerHeight){el.classList.add('pre');io.observe(el);}
+    });
+  }
+
+  // demo ribbon
+  document.getElementById('ribbon-x').addEventListener('click',function(){document.getElementById('ribbon').hidden=true;});
+
+  // price request -> WhatsApp
+  document.getElementById('qform').addEventListener('submit',function(e){
+    e.preventDefault();
+    function v(id){return document.getElementById(id).value.trim();}
+    var car=[v('f-make'),v('f-model'),v('f-year'),v('f-engine')].filter(Boolean).join(', ');
+    var piesa=(document.querySelector('input[name="piesa"]:checked')||{}).value||'';
+    var det=v('f-det');
+    var msg='Bună ziua! Aș dori un preț pentru: '+piesa+'.'+(car?'\nMașina: '+car+'.':'')+(det?'\n'+det:'')+'\nVă trimit și poza talonului.';
+    window.location.href='https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent(msg);
+  });
+  document.getElementById('yr').textContent=new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
