@@ -199,8 +199,25 @@ section{padding-block:clamp(72px,10vw,120px)}
 .js .chat .m{opacity:0;transform:translateY(8px) scale(.98);transition:opacity .4s ease,transform .4s ease}
 .js .chat .m.show{opacity:1;transform:none}
 
+/* price request: shared header, two equal columns */
+.quote-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:24px 40px}
+.quote-head .sec-head{max-width:640px}
+.quote-call{display:grid;gap:2px;font-size:15px;color:var(--ink-soft);text-align:right}
+.quote-call .big{font:600 26px var(--mono);color:var(--ink);text-decoration:none}
+.quote-cols{margin-top:44px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
+.qcol{display:flex;flex-direction:column;gap:14px;min-width:0}
+.qlabel{display:flex;align-items:center;gap:10px;font:700 15px var(--body);color:var(--ink)}
+.qlabel .num{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:12px;flex:none}
+.qcol .chat,.qcol .form{flex:1;margin-top:0;max-width:none}
+.qcol .chat{display:flex;flex-direction:column}
+.qcol .chat-body{flex:1;align-content:start}
+.chat-day{justify-self:center;font:600 11px var(--body);letter-spacing:.04em;text-transform:uppercase;color:#54656F;background:#fff;border-radius:6px;padding:4px 10px;box-shadow:0 1px 1px rgba(0,0,0,.06);margin-bottom:4px}
+.chat-input{display:flex;align-items:center;gap:10px;padding:10px 12px;background:#F0F2F5;border-top:1px solid rgba(0,0,0,.06)}
+.chat-input span{flex:1;background:#fff;border-radius:20px;padding:9px 14px;font-size:14px;color:#8696A0}
+.chat-input i{width:38px;height:38px;border-radius:50%;background:#1E9E55;display:grid;place-items:center;flex:none}
+.chat-input i svg{width:18px;height:18px;color:#fff}
+@media (max-width:900px){.quote-cols{grid-template-columns:1fr}.quote-call{text-align:left}}
 /* price request form */
-.quote .wrap{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,6vw,80px);align-items:start}
 .talon{margin-top:30px;background:var(--paper);border:1px solid var(--line-light);border-radius:3px;padding:20px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start}
 .talon svg{width:54px;height:40px}
 .talon b{display:block;font:700 17px var(--display);text-transform:uppercase;letter-spacing:.02em}
@@ -224,7 +241,6 @@ section{padding-block:clamp(72px,10vw,120px)}
 .btn-wa{background:#1E9E55;color:#fff;justify-content:center}
 .btn-wa:hover{background:#1A8B4B;transform:translateY(-2px)}
 .form .note{font-size:13px;color:var(--ink-soft)}
-@media (max-width:900px){.quote .wrap{grid-template-columns:1fr}}
 @media (max-width:520px){.form{grid-template-columns:1fr}}
 
 /* parts */
@@ -440,25 +456,31 @@ footer a{color:var(--on-dark-soft)}
 
 <section class="light quote" id="pret">
   <div class="wrap">
-    <div class="rv">
-      <p class="eyebrow">Cere preț</p>
-      <h2 style="margin-top:18px">Află prețul unei piese în câteva minute.</h2>
-      <p style="margin-top:18px;font-size:18px;color:var(--ink-soft);max-width:44ch">Trimite-ne poza talonului sau completează formularul. Mesajul se deschide gata scris pe WhatsApp.</p>
-      <div class="chat" id="chat" aria-label="Exemplu de conversație pe WhatsApp">
+    <div class="quote-head rv">
+      <div class="sec-head">
+        <p class="eyebrow">Cere preț</p>
+        <h2>Află prețul unei piese în câteva minute.</h2>
+      </div>
+      <p class="quote-call">Sau sună direct<a class="big num" href="tel:+40741289083">0741 289 083</a></p>
+    </div>
+    <div class="quote-cols">
+      <div class="qcol rv">
+        <p class="qlabel"><span class="num">A</span>Trimite poza talonului pe WhatsApp</p>
+        <div class="chat" id="chat" aria-label="Exemplu de conversație pe WhatsApp">
         <div class="chat-top"><span class="av">J</span><div><b>JOJA Piese Auto</b><small id="chat-st">online</small></div><span class="tagx">exemplu</span></div>
         <div class="chat-body">
+          <span class="chat-day">Azi</span>
           <div class="m out"><span class="talon-mini" aria-hidden="true"><svg viewBox="0 0 54 34"><rect x="1" y="1" width="52" height="32" rx="3" fill="#fff" stroke="#9BA3AE" stroke-width="1.5"/><rect x="6" y="6" width="14" height="3" fill="#C8102E"/><rect x="6" y="12" width="40" height="2" fill="#9BA3AE"/><rect x="6" y="17" width="32" height="2" fill="#9BA3AE"/><rect x="6" y="22" width="36" height="2" fill="#9BA3AE"/><rect x="6" y="27" width="20" height="2" fill="#9BA3AE"/></svg><em>talon.jpg</em></span>Bună ziua! Ulei și filtru pentru mașina asta?</div>
           <div class="m in">Bună ziua! Golf 6, 1.6 TDI: ulei 5W-30 VW 507.00, 4,5 litri, plus filtrul de ulei. Le avem pe stoc.</div>
           <div class="m in">Treceți azi până la 18:00. Manopera la schimb: 0 lei.</div>
           <div class="m out">Super, vin la ora 16.</div>
         </div>
+        <div class="chat-input" aria-hidden="true"><span>Scrie un mesaj</span><i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 20.5 21 12 3 3.5 3 10l12 2-12 2z"/></svg></i></div>
       </div>
-      <div class="direct">
-        <span>Sau sună direct</span>
-        <a class="big" href="tel:+40741289083">0741 289 083</a>
       </div>
-    </div>
-    <form class="form rv" id="qform" novalidate>
+      <div class="qcol rv">
+        <p class="qlabel"><span class="num">B</span>Sau completează ce știi despre mașină</p>
+        <form class="form" id="qform" novalidate>
       <label>Marca<input id="f-make" autocomplete="off" placeholder="ex. Volkswagen"></label>
       <label>Modelul<input id="f-model" autocomplete="off" placeholder="ex. Golf 6"></label>
       <label>Anul<input id="f-year" inputmode="numeric" autocomplete="off" placeholder="ex. 2011"></label>
@@ -476,6 +498,8 @@ footer a{color:var(--on-dark-soft)}
       <button class="btn btn-wa full" type="submit"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .6l-.4.6-.4.5c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.7-.1l1-1.2c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.1 1.2Z"/></svg>Trimite pe WhatsApp</button>
       <p class="note full">După ce se deschide WhatsApp, atașează și poza talonului.</p>
     </form>
+      </div>
+    </div>
   </div>
 </section>
 
