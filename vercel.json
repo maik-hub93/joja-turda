@@ -1,0 +1,5 @@
+{
+  "redirects": [
+    { "source": "/:path*", "destination": "https://demo.aeriadigital.com/vdp-auto/:path*", "permanent": false }
+  ]
+}
